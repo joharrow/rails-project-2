@@ -1,0 +1,66 @@
+<div class="page-header">
+  <h1>Homework #2
+    <small>Due: Thursday, Nov 5 before class begins.</small>
+  </h1>
+</div>
+
+<div class="row">
+  <div class="col-md-4 well">
+
+    <h4>Overview</h4>
+    <p>
+      The two goals of this assignment are to become familiar with the Bootstrap CSS framework (or another of your choice), and to learn how to discover and integrate web services into your application.
+    </p>
+
+    <p>You have been given a Rails application that is mostly complete.
+      It's the beginning of a simple website for a retail store.
+    </p>
+
+    <h4>Keep In Mind...</h4>
+    <p>Your job is to enhance this Rails application by any means necessary (modifying the views, controllers, and/or models) to achieve all of the following requirements.</p>
+    <p>You are expected to use the Bootstrap framework, jQuery, jQuery UI, or something similar, to creatively build a usable website. You will also need to use some of the Google APIs to achieve all of these requirements, as well as the Divvy API.</p>
+    <p>
+      Reminder: you will need to modify the views, controllers, and models in order to achieve all of the requirements.
+    </p>
+  </div>
+  <div class="col-md-6 col-md-offset-1">
+    <h4>1. Product Catalog Page</h4>
+    <ol>
+      <li>Your app should support <code>/products</code> to display a product catalog.</li>
+      <li>The product catalog page should also be the home page.</li>
+      <li>The catalog is a simple list of products.</li>
+      <li>Each product should be presented nicely, with a title, photo, price, and description.  Look at well-known sites that display product catalogs for examples: music123.com, target.com, etc.</li>
+      <li>You only need to implement <code>ProductsController#index</code>, not all seven actions.</li>
+      <li>You do not need to do anything else on the <code>/products</code> page except list the products.</li>
+    </ol>
+
+    <h4>2. Store Locator Page</h4>
+    <ol>
+      <li>Your app must support the url <code>/stores</code> that will display a list of all the stores on a map, with markers for each store location.</li>
+      <li>Provide a way for site visitors to find stores near them.</li>
+      <li>Use the "store locator" feature of your favorite site to see examples.  Target.com and McDonalds.com are both good examples. </li>
+      <li>When a user searches for stores near them, the Google map should be centered on their location. You can determine the the user's location automatically, or have the user search for stores based on their address.</li>
+      <li>The map should be accompanied by a store listing, sorted by distance from the user's location if the user's location has been provided.  If the user's location has not been provided, the stores can be in any order.</li>
+      <li>In the store listing, a user should be able to click on a store to see the store's detail page (<code>/stores/:id</code>).</li>
+    </ol>
+
+    <h4>3. Store Detail Page</h4>
+    <p>
+      On a store's details page (<code>StoresController#show</code>):
+    </p>
+    <ol>
+      <li>Display a Google map centered on the store with a marker at the store location.</li>
+      <li>Display the name and location of the Divvy bike station nearest the store.</li>
+      <li>If the user's location is known (because they clicked through from the store locater page, etc.), you must display driving directions to the that store.</li>
+      <li>If the user's location is known (because they clicked through from the store locater page, etc.), you must also display the name and address of the Divvy bike station nearest the user's location</li>
+    </ol>
+
+    <h4>4. Visual Design Details</h4>
+    <ol>
+      <li>You must use at least one web-based font (like Google Fonts) for some of the text (doesn't have to be applied to everything).</li>
+      <li>Your app should be just as usable when accessed from a mobile device, like a phone or tablet, by using responsive CSS media queries (either written by you or a CSS framework) to adjust the layout and content visibility as needed.</li>
+      <li>Assuming you use the Bootstrap framework, be sure to use the Bootstrap Grid and utilize appropriate framework features as needed (like in forms, etc)</li>
+    </ol>
+
+  </div>
+</div>
