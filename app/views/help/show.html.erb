@@ -9,18 +9,21 @@
 
     <h4>Overview</h4>
     <p>
-      The two goals of this assignment are to become familiar with the Bootstrap CSS framework (or another of your choice), and to learn how to discover and integrate web services into your application.
+      There are two goals of this assignment.  First, you must become familiar with the Bootstrap CSS framework (or another of your choice).  Second, you will work to integrate more web services into your application, from both the client and server.
     </p>
 
     <p>You have been given a Rails application that is mostly complete.
-      It's the beginning of a simple website for a retail store.
+      It's the beginning of a simple website for a retail store.  For now, you do NOT need to worry about user accounts.  That will be done next time.
     </p>
 
     <h4>Keep In Mind...</h4>
     <p>Your job is to enhance this Rails application by any means necessary (modifying the views, controllers, and/or models) to achieve all of the following requirements.</p>
     <p>You are expected to use the Bootstrap framework, jQuery, jQuery UI, or something similar, to creatively build a usable website. You will also need to use some of the Google APIs to achieve all of these requirements, as well as the Divvy API.</p>
+
+    <h4>APIs</h4>
     <p>
-      Reminder: you will need to modify the views, controllers, and models in order to achieve all of the requirements.
+      <%= link_to "Google Maps and Web Services", "https://developers.google.com/maps/" %>
+      <%= link_to "Divvy Bikes API (undocumented)", "http://www.divvybikes.com/stations/json" %>
     </p>
   </div>
   <div class="col-md-6 col-md-offset-1">
@@ -34,19 +37,14 @@
       <li>You do not need to do anything else on the <code>/products</code> page except list the products.</li>
     </ol>
 
-    <h4>2. Store Locator Page</h4>
-    <ol>
-      <li>Your app must support the url <code>/stores</code> that will display a list of all the stores on a map, with markers for each store location.</li>
-      <li>Provide a way for site visitors to find stores near them.</li>
-      <li>Use the "store locator" feature of your favorite site to see examples.  Target.com and McDonalds.com are both good examples. </li>
-      <li>When a user searches for stores near them, the Google map should be centered on their location. You can determine the the user's location automatically, or have the user search for stores based on their address.</li>
-      <li>The map should be accompanied by a store listing, sorted by distance from the user's location if the user's location has been provided.  If the user's location has not been provided, the stores can be in any order.</li>
-      <li>In the store listing, a user should be able to click on a store to see the store's detail page (<code>/stores/:id</code>).</li>
-    </ol>
+    <h4>2. Listing of Store Locations</h4>
+    <p>
+      You must build a page at <code>/stores</code> that lists all of the stores.  For each entry in the list, simply display the store's address as a link that will take the user to that store's detail (<code>show</code>) page.
+    </ul>
 
     <h4>3. Store Detail Page</h4>
     <p>
-      On a store's details page (<code>StoresController#show</code>):
+      On a store's details page (<code>/stores/:id</code>):
     </p>
     <ol>
       <li>Display a Google map centered on the store with a marker at the store location.</li>
