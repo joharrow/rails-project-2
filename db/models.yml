@@ -11,7 +11,7 @@ Store
 Product
   title: string
   photo_url: string
-  price: integer
+  price: decimal
   description: text
   sku: string
 

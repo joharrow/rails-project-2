@@ -1,0 +1,25 @@
+<div class="page-header">
+  <h2>Products(<%= @products.count %>)</h2>
+</div>
+
+<div class="container">
+  <% @products.each do |product| %>
+    <div class="row image-height product-description">
+      <div class="col-md-2 image-height">
+        <img class="product-image" src="<%= product.photo_url %>" alt="<%= product.title %>">        
+      </div>
+      <div class="col-md-10">
+        <h4 class="product-title"><%= product.title %></h4>
+        <p class="product-price">
+          <% if product.price.to_s.index(".") + 1 == product.price.to_s.length - 1 %>
+            $<%= product.price %>0
+          <% else %>
+            $<%= product.price %>
+          <% end %>
+        </p>
+        <p class="product-description"><%= product.description %></p>
+      </div>
+    </div>
+    <hr>
+  <% end %>
+</div>

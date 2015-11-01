@@ -16,15 +16,15 @@ ActiveRecord::Schema.define(version: 0) do
   create_table "products", force: :cascade do |t|
     t.string  "title"
     t.string  "photo_url"
-    t.integer "price"
+    t.decimal "price"
     t.text    "description"
+    t.string  "sku"
   end
 
   create_table "stores", force: :cascade do |t|
     t.string "address"
-    t.string "city"
-    t.string "state"
-    t.string "zip"
+    t.string "hours"
+    t.string "phone"
   end
 
   create_table "users", force: :cascade do |t|
