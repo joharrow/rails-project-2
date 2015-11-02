@@ -1,11 +1,16 @@
 <div class="container">
   <div class="row">
-    <div class="col-xs-4">
-      <h4>Store Location:<br><%= @store.address %></h4>
+    <div class="col-xs-4" id="store">
+      <h4>Store Location:</h4>
+      <p id="storeaddr"><%= @store.address %></p>
       <div id="map"></div>
     </div>
-    <div class="col-xs-4">
-      <h4>Nearest Divvy Bike Location:</h4>
+    <div class="col-xs-4" id="user">
+      <h4>Your Location:</h4>
+      <div id="useraddr"></div>
+    </div>
+    <div class="col-xs-4" id="divvy">
+      <h4>Nearest Divvy:</h4>
       <p><%= @minStation['stationName'] %></p>
       <p>Address:</p>
       <p><%= @minStation['stAddress1'] %>, <%= @minStation['stAddress2'] %>
@@ -22,60 +27,127 @@
 </div>
 
 <script>
-  var map;
-  var address;
 
-  function initMap() 
-  {
-    address = "<%= @store.address %>";
-    retrieveCoordinates( address );
-  }
+var map;
+var address;
+var geolocate;
 
-  function retrieveCoordinates( address )
-  {
-    var geocoder = new google.maps.Geocoder();
-    geocoder.geocode( 
-      { 'address': address }, 
-      function( results, status ) 
+$.getScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyBl3kW-f2HVLw3SOIbjnJH5nM6tsQt4odI&callback=initMap");
+
+function initMap() 
+{
+  address = "<%= @store.address %>";
+  retrieveCoordinates( address );
+  findGeoLocation();
+}
+
+function retrieveCoordinates( address )
+{
+  var geocoder = new google.maps.Geocoder();
+  geocoder.geocode( 
+    { 'address': address }, 
+    function( results, status ) 
+    {
+      var latlng;
+
+      if( status === google.maps.GeocoderStatus.OK )
       {
-        var latlng;
-
-        if( status === google.maps.GeocoderStatus.OK )
-        {
-          latlng = results[0].geometry.location;
-        }
-        else
-        {
-          latlng = new google.maps.LatLng( 41.837, -87.685 );
-        }
-
-        var mapOptions = { zoom: 14, center: latlng };
-        map = new google.maps.Map(document.getElementById('map'), mapOptions);
-
-        var marker = new google.maps.Marker(
-        {
-          map: map,
-          position: latlng
-        });
-
-        var divvyLat = <%= @minStation['latitude'] %>;
-        var divvyLon = <%= @minStation['longitude'] %>;
-        var divvyLatLng = new google.maps.LatLng( divvyLat, divvyLon );
-
-        var divvyMarker = new google.maps.Marker(
-        {
-          map: map,
-          position: divvyLatLng,
-          icon: "<%= asset_path('divvy_reduced.png') %>"
-        });
+        latlng = results[0].geometry.location;
       }
-    );
+      else
+      {
+        latlng = new google.maps.LatLng( 41.837, -87.685 );
+      }
+
+      var mapOptions = { zoom: 15, center: latlng };
+      map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+      var marker = new google.maps.Marker(
+      {
+        map: map,
+        position: latlng
+      });
+
+      addDivvyMarker();
+    }
+  );
+}
+
+function addDivvyMarker()
+{
+  var divvyLat = <%= @minStation['latitude'] %>;
+  var divvyLon = <%= @minStation['longitude'] %>;
+  var divvyLatLng = new google.maps.LatLng( divvyLat, divvyLon );
+
+  var divvyMarker = new google.maps.Marker(
+  {
+    position: divvyLatLng,
+    icon: "<%= asset_path('divvy_reduced.png') %>"
+  });
+
+  divvyMarker.setMap( map );
+}
+
+function findGeoLocation() 
+{
+  var userLat;
+  var userLon;
+
+  if( Modernizr.geolocation )
+  {
+    navigator.geolocation.getCurrentPosition( success, fail );
   }
+  else
+  {
 
-</script>
+  }
+}
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBl3kW-f2HVLw3SOIbjnJH5nM6tsQt4odI&callback=initMap"></script>
+function success( position )
+{
+  $( "#divvy" ).hide();
+  $( "#user ").fadeIn();
+  $( "#divvy ").fadeIn();
+  userLat = position.coords.latitude;
+  userLon = position.coords.longitude;
 
-<script>
+  var latlng = { lat: userLat, lng: userLon };
+  var geocoder = new google.maps.Geocoder();
 
+  geocoder.geocode( 
+    { 'location': latlng },
+    function( results, status ) 
+    {
+      if( status === google.maps.GeocoderStatus.OK && results[0] ) 
+      {
+        $( "#useraddr" ).html( results[0].formatted_address );
+        getDirections( address );
+      }
+      else
+      {
+        $( "#useraddr" ).html( userLat.toString() + ", " + userLon.toString() );
+      }
+    }
+  );
+}
+
+function fail()
+{
+  
+}
+
+function getDirections( address )
+{
+  var origin = $( "#useraddr" ).text();
+  var destination = address;
+  var key = "AIzaSyBl3kW-f2HVLw3SOIbjnJH5nM6tsQt4odI&callback=initMap"
+
+  var request = "http://maps.googleapis.com/maps/api/directions/json?origin="; 
+  request += origin;
+  request += "&destination="; 
+  request += destination;
+  request += "&key=";
+  request += key;
+
+}
 </script>
