@@ -1,0 +1,81 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-4">
+      <h4>Store Location:<br><%= @store.address %></h4>
+      <div id="map"></div>
+    </div>
+    <div class="col-xs-4">
+      <h4>Nearest Divvy Bike Location:</h4>
+      <p><%= @minStation['stationName'] %></p>
+      <p>Address:</p>
+      <p><%= @minStation['stAddress1'] %>, <%= @minStation['stAddress2'] %>
+        <% if !@minStation['stAddress2'].blank? %>
+          , 
+        <% end %>
+        <%= @minStation['city'] %>
+      </p>
+      <p>Coordinates:</p>
+      <p>Lat: <%= @minStation['latitude'] %>, Lon: <%= @minStation['longitude'] %></p>
+      <p>Look for the <%= image_tag src="divvy_reduced.png" %> icon on the map!</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  var map;
+  var address;
+
+  function initMap() 
+  {
+    address = "<%= @store.address %>";
+    retrieveCoordinates( address );
+  }
+
+  function retrieveCoordinates( address )
+  {
+    var geocoder = new google.maps.Geocoder();
+    geocoder.geocode( 
+      { 'address': address }, 
+      function( results, status ) 
+      {
+        var latlng;
+
+        if( status === google.maps.GeocoderStatus.OK )
+        {
+          latlng = results[0].geometry.location;
+        }
+        else
+        {
+          latlng = new google.maps.LatLng( 41.837, -87.685 );
+        }
+
+        var mapOptions = { zoom: 14, center: latlng };
+        map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+        var marker = new google.maps.Marker(
+        {
+          map: map,
+          position: latlng
+        });
+
+        var divvyLat = <%= @minStation['latitude'] %>;
+        var divvyLon = <%= @minStation['longitude'] %>;
+        var divvyLatLng = new google.maps.LatLng( divvyLat, divvyLon );
+
+        var divvyMarker = new google.maps.Marker(
+        {
+          map: map,
+          position: divvyLatLng,
+          icon: "<%= asset_path('divvy_reduced.png') %>"
+        });
+      }
+    );
+  }
+
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBl3kW-f2HVLw3SOIbjnJH5nM6tsQt4odI&callback=initMap"></script>
+
+<script>
+
+</script>

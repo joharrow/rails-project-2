@@ -1,0 +1,13 @@
+<div class="page-header">
+  <h2>Stores(<%= @stores.count %>)</h2>
+</div>
+
+<div class="container">
+  <% i = 1 %>
+  <% @stores.each do |store| %>
+    <div class="row">
+      <p><%= link_to i.to_s + ". " + store.address, "/stores/#{store.id}" %></p>
+    </div>
+    <% i += 1 %>
+  <% end %>
+</div>

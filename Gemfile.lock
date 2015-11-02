@@ -50,6 +50,7 @@ GEM
     execjs (2.6.0)
     ez (1.3.0)
       hirb (~> 0.7)
+    geocoder (1.2.12)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     hirb (0.7.3)
@@ -140,6 +141,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   coffee-rails (~> 4.1.0)
   ez
+  geocoder
   jbuilder (~> 2.0)
   jquery-rails
   quiet_assets
@@ -150,3 +152,6 @@ DEPENDENCIES
   sqlite3
   turbolinks
   uglifier (>= 1.3.0)
+
+BUNDLED WITH
+   1.10.6
