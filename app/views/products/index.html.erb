@@ -5,10 +5,10 @@
 <div class="container">
   <% @products.each do |product| %>
     <div class="row image-height product-description">
-      <div class="col-xs-2 image-height">
+      <div class="col-xs-3 image-height">
         <img class="product-image" src="<%= product.photo_url %>" alt="<%= product.title %>">        
       </div>
-      <div class="col-xs-10">
+      <div class="col-xs-9">
         <h4 class="product-title"><%= product.title %></h4>
         <p class="product-price">
           <% if product.price.to_s.index(".") + 1 == product.price.to_s.length - 1 %>
