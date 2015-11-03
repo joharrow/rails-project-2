@@ -49,6 +49,14 @@
   max-height: 100%;
 }
 
+#map2 {
+  height: 600px;
+  width: 800px;
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+}
+
 .no-padding {
   margin: 0;
   padding: 0;
@@ -70,6 +78,11 @@
   display: none;
 }
 
-#divvy {
+#nouser {
+  display: none;
+}
 
+hr.dir {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
 }

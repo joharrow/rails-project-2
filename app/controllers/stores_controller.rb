@@ -7,7 +7,9 @@ class StoresController < ApplicationController
   def show
     @store = Store.find(params[:id])
 
-    divvyjson = JSON.parse(open("http://www.divvybikes.com/stations/json").read)
+    @divvy = open("http://www.divvybikes.com/stations/json").read
+    #divvyjson = JSON.parse(open("http://www.divvybikes.com/stations/json").read)
+    divvyjson = JSON.parse(@divvy)
     stations = divvyjson['stationBeanList']
 
     location = Geocoder.search(@store.address)
@@ -28,7 +30,7 @@ class StoresController < ApplicationController
       diffLat = curLat - locLat
       diffLon = curLon - locLon
 
-      a = ( Math.sin( diffLat / 2 ) )**2 + Math.cos( locLat ) * Math.cos( curLat ) * ( Math.sin( diffLon ) )**2
+      a = ( Math.sin( diffLat / 2.0 ) )**2 + Math.cos( locLat ) * Math.cos( curLat ) * ( Math.sin( diffLon ) )**2
       c = 2 * Math.atan2( Math.sqrt( a ), Math.sqrt( 1 - a ) )
       d = 3961 * c
 
