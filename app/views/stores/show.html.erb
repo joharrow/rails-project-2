@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container hidden" id="container">
   <div class="row">
     <div class="col-xs-4" id="store">
       <h4>Store Location:</h4>
@@ -31,44 +31,63 @@
 var map;
 var address;
 var geolocate;
+var userLat;
+var userLon;
+var userCoordinates;
 
-$.getScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyBl3kW-f2HVLw3SOIbjnJH5nM6tsQt4odI&callback=initMap");
+getGeoLocation();
 
-function initMap() 
+function initMap()
 {
   address = "<%= @store.address %>";
   retrieveCoordinates( address );
-  findGeoLocation();
+}
+
+function initMapSuccess() 
+{
+  initMap();
+  retrieveAddress( userCoordinates );
+}
+
+function initMapFail()
+{
+  initMap();
 }
 
 function retrieveCoordinates( address )
 {
+    var lat = <%= @locLat %>;
+    var lon = <%= @locLon %>;
+    var latlng = { lat: lat, lng: lon };
+
+    var mapOptions = { zoom: 15, center: latlng };
+    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+    var marker = new google.maps.Marker(
+    {
+      map: map,
+      position: latlng
+    });
+
+    addDivvyMarker();
+}
+
+function retrieveAddress( latlng )
+{
   var geocoder = new google.maps.Geocoder();
+
   geocoder.geocode( 
-    { 'address': address }, 
+    { 'location': latlng },
     function( results, status ) 
     {
-      var latlng;
-
-      if( status === google.maps.GeocoderStatus.OK )
+      if( status === google.maps.GeocoderStatus.OK && results[0] ) 
       {
-        latlng = results[0].geometry.location;
+        $( "#useraddr" ).html( results[0].formatted_address );
       }
       else
       {
-        latlng = new google.maps.LatLng( 41.837, -87.685 );
+        $( "#useraddr" ).html( userLat.toString() + ", " + userLon.toString() );
       }
-
-      var mapOptions = { zoom: 15, center: latlng };
-      map = new google.maps.Map(document.getElementById('map'), mapOptions);
-
-      var marker = new google.maps.Marker(
-      {
-        map: map,
-        position: latlng
-      });
-
-      addDivvyMarker();
     }
   );
 }
@@ -88,7 +107,7 @@ function addDivvyMarker()
   divvyMarker.setMap( map );
 }
 
-function findGeoLocation() 
+function getGeoLocation() 
 {
   var userLat;
   var userLon;
@@ -104,36 +123,20 @@ function findGeoLocation()
 }
 
 function success( position )
-{
-  $( "#divvy" ).hide();
-  $( "#user ").fadeIn();
-  $( "#divvy ").fadeIn();
+{  
   userLat = position.coords.latitude;
   userLon = position.coords.longitude;
+  userCoordinates = { lat: userLat, lng: userLon };
 
-  var latlng = { lat: userLat, lng: userLon };
-  var geocoder = new google.maps.Geocoder();
-
-  geocoder.geocode( 
-    { 'location': latlng },
-    function( results, status ) 
-    {
-      if( status === google.maps.GeocoderStatus.OK && results[0] ) 
-      {
-        $( "#useraddr" ).html( results[0].formatted_address );
-        getDirections( address );
-      }
-      else
-      {
-        $( "#useraddr" ).html( userLat.toString() + ", " + userLon.toString() );
-      }
-    }
-  );
+  $.getScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyBl3kW-f2HVLw3SOIbjnJH5nM6tsQt4odI&callback=initMapSuccess");
+  $( "#container" ).removeClass("hidden");
+  $( "#user ").fadeIn();
 }
 
 function fail()
 {
-  
+  $.getScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyBl3kW-f2HVLw3SOIbjnJH5nM6tsQt4odI&callback=initMapFail");
+  $( "#container" ).removeClass( "hidden" );
 }
 
 function getDirections( address )
@@ -148,6 +151,7 @@ function getDirections( address )
   request += destination;
   request += "&key=";
   request += key;
-
 }
 </script>
+
+<script>

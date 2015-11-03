@@ -14,6 +14,9 @@ class StoresController < ApplicationController
     locLat = location[0].latitude
     locLon = location[0].longitude
 
+    @locLat = location[0].latitude.to_s
+    @locLon = location[0].longitude.to_s
+
     minimum = 3961
 
     @minStation = stations[0]
@@ -35,8 +38,6 @@ class StoresController < ApplicationController
       end
 
     end
-
-    logger.info @minStation
 
   end
 
