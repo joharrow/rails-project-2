@@ -30,6 +30,10 @@
   height: 200px
 }
 
+.products-header {
+  font-family: "Salsa";
+}
+
 .product-image {
   margin: auto;
   display: block;
@@ -39,6 +43,10 @@
 
 .product-description {
   overflow: auto;
+}
+
+.stores-header {
+  font-family: "Salsa";
 }
 
 #map {
