@@ -12,7 +12,11 @@
         <% end %>
         <%= @minStation['city'] %>
       </p>
-      <p>(<%= @minStation['latitude'] %>, <%= @minStation['longitude'] %>)</p>
+      <% if !@minStation['location'].blank? %>
+        <p>@ <%= @minStation['location'] %></p>
+      <% else %>
+        <p>@ <%= @minStation['latitude'] %>, <%= @minStation['longitude'] %></p>
+      <% end %>
       <hr>
       <div id="map"></div>
     </div>
@@ -226,8 +230,15 @@ function getUserDivvyLocation()
   {
     divvyhtml += "<p>" + minStation.stAddress1 + ", " + minStation.city + "</p>";
   }
-  divvyhtml += "<p>(" + minStation.latitude + ", " + minStation.longitude + ")</p>";
-
+  if( minStation.location )
+  {
+    divvyhtml += "<p>@ " + minStation.location + "</p>";
+  }
+  else
+  {
+    divvyhtml += "<p>@ " + minStation.latitude + ", " + minStation.longitude + "</p>";
+  }
+  
   $( "#userdivvy" ).html( divvyhtml );
 }
 
