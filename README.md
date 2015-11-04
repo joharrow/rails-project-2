@@ -13,9 +13,9 @@ If not, only the map is shown. Note that the page layout is varied based on the 
 To run the application in localhost, start by cloning the application and run the following from 
 the project directory,
 
-bundle install
-rake db:seed
-rake db:migrate
-rails server
+bundle install<br>
+rake db:seed<br>
+rake db:migrate<br>
+rails server<br>
 
 Navigate to localhost:3000 in a web browser.
