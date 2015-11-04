@@ -1,16 +1,21 @@
 # Homework #2
 
-DUE: Thursday, Nov 5, 5:30pm.
+All requirements completed.
 
-- Fork this repository so that you have a private repository under your own account.
-- Clone your repository to your laptop.
-- If you are on Windows, change the Gemfile accordingly.
-- `bundle install`
-- Run the app.  Use the `Help` link in the toolbar to read the assignment.
+The Salsa google font was applied to the Products and Stores headings for the respective index view pages.
 
-Then:
+The products catalog is displayed with one product per row, similar to the layout on Amazon.com.
 
-- Modify the app according to the requirements as much as you can.
-- Commit and push your changes up to your fork.  Do this as often as you want before the deadline.
+When navigating to a store show page, the user will be prompted to share their location. If
+the user shares their location, there is added information related to the user location, as required. 
+If not, only the map is shown. Note that the page layout is varied based on the location sharing.
 
-Questions?  Let us know on Piazza.
+To run the application in localhost, start by cloning the application and run the following from 
+the project directory,
+
+bundle install
+rake db:seed
+rake db:migrate
+rails server
+
+Navigate to localhost:3000 in a web browser.
