@@ -1,6 +1,4 @@
-# Homework #2
-
-All requirements completed.
+# Rails Project #2
 
 The Salsa google font was applied to the Products and Stores headings for the respective index view pages.
 
